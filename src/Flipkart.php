@@ -17,7 +17,7 @@ class Flipkart {
  
     public function __construct($access_token) {
         $this->access_token = $access_token;
-        $this->api_version = 'v1';
+        $this->api_version = 'v3';
         $this->api_base_url = config('flipkart.api_base_url');
     }
 
@@ -44,6 +44,14 @@ class Flipkart {
 
     public function getOrders(string $status = 'all', string $source = 'all', int $page = 1){
         return $this->call("/order/info", [
+            'source' => $source,
+            'status' => $status,
+            'page' => $page
+        ]);
+    }
+
+    public function filter(string $status = 'all', string $source = 'all', int $page = 1){
+        return $this->call("/shipments/filter", [
             'source' => $source,
             'status' => $status,
             'page' => $page
